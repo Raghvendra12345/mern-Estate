@@ -46,6 +46,7 @@ export default function App() {
   return <BrowserRouter>
 
   {/* //we want to use header in all web pages so,we init header like this samjhe ha ha ha  */}
+  <>
   <Header/>
   <Routes>
      <Route path="/" element={<Home/>}/>
@@ -54,5 +55,6 @@ export default function App() {
      <Route path="/about" element={<About/>}/>
      <Route path="/profile" element={<Profile/>}/>
   </Routes>
+  </>
   </BrowserRouter>
 }
