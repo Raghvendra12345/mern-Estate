@@ -1,11 +1,17 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { data, Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { signInStart ,signInSuccess,signInFailure} from "../redux/user/userSlice";
+
+
 // import { useState } from 'react';
 export default function Signin() {
   const [formData, setFormData] = useState({});
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
+  // const [error, setError] = useState(null);
+  // const [loading, setLoading] = useState(false);
+  const {loading,error}=useSelector((state)=>state.user);
   const navigate = useNavigate(); //this is used for if all sign up done then automatically directed to signin page
+  const dispatch=useDispatch();
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -16,7 +22,8 @@ export default function Signin() {
     e.preventDefault(); ///it is used to not refreshing the page when we submit
 
     try {
-      setLoading(true);
+      // setLoading(true);
+      dispatch(signInStart())
       const res = await fetch("/api/auth/signin", {
         method: "POST",
         headers: {
@@ -30,17 +37,20 @@ export default function Signin() {
       //ye banaya jaa raha ki jab signup button pe click ho to loading ho
       console.log(data);
       if (data.success === false) {
-        setLoading(false);
-        setError(data.message);
+        // setLoading(false);
+        // setError(data.message);
+        dispatch(signInFailure(data.message));
         return;
       }
-      setLoading(false);
-      setError(null);
+      // setLoading(false);
+      // setError(null);
+      dispatch(signInSuccess(data));
       navigate("/");
       // console.log(data)
     } catch (error) {
-      setLoading(false);
-      setError(error.message);
+      // setLoading(false);
+      // setError(error.message);
+      dispatch(signInFailure(data.message))
     }
   };
   // console.log(formData);
