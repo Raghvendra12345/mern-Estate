@@ -9,7 +9,7 @@
 
     // console.log("MongoDB URI:", process.env.MONGO);
     mongoose.connect(process.env.MONGO).then(()=>{
-        console.log("connected mongodb");
+        console.log("connected mongodb ok");
     })
     .catch((err)=>{
     console.log("not connected",err)
